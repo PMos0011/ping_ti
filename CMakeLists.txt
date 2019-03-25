@@ -4,7 +4,7 @@ project(Ping_TI)
 include_directories(src/include)
 file(GLOB SOURCES "src/*.cpp")
 
-add_executable(ping_it.c ${SOURCES})
+add_executable(ping_ti.c ${SOURCES})
 
 find_path( MYSQL_INCLUDE_DIR
 		NAMES "mysql.h"
@@ -22,5 +22,5 @@ find_path( MYSQL_INCLUDE_DIR
 			  "/usr/local/lib64/mysql"
 			  "/usr/mysql/lib/mysql"
 			  "/usr/mysql/lib64/mysql" )
-target_link_libraries (ping_it.c ${MYSQL_LIBRARY})
+target_link_libraries (ping_ti.c ${MYSQL_LIBRARY})
 

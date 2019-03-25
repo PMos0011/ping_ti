@@ -1,4 +1,5 @@
 src/bin/
 src/obj/
+build/
 src/Ping_TI.cbp
 src/Ping_TI.layout
