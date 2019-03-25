@@ -4,62 +4,44 @@
 #include "ping.h"
 #include "functions.h"
 #include <unistd.h>
+#include "IP_addreses.h"
 
 using namespace std;
 
 int main()
 {
-    list <string> ip_list;
-    list <string>::iterator it;
-
-
-    ip_list=Get_IPs();
-    int lst_size=ip_list.size();
-
-    uint8_t connections[2][lst_size];
-
-        for (int j=0; j<lst_size; j++)
-            connections[0][j]=0;
-
-            for (int j=0; j<lst_size; j++)
-            connections[1][j]=2;
-
+cout<<currentDate()<<" Application start"<<endl;
     while (true)
     {
-        int counter = 0;
+        list <IP_addreses> ip_list;
+        list <IP_addreses>::iterator it;
+
+        ip_list=Get_IPs();
 
         for (it=ip_list.begin(); it!=ip_list.end(); it++)
         {
-
-            if(ping(*it)<=0)
+            IP_addreses tmp_ipAdd = *it;
+            if(ping(tmp_ipAdd.address)<=0)
             {
-                connections[0][counter]=1;
-
-
+                if(tmp_ipAdd.state==0)
+                {
+                    Write_state(1,tmp_ipAdd.address);
+                    cout<<currentDate()<<" "<<tmp_ipAdd.name<<" "<<tmp_ipAdd.address<<" - connectiol lost"<<endl;
+                }
             }
             else
-                connections[0][counter]=0;
-
-            if(connections[0][counter]!=connections[1][counter])
             {
-
-                if(connections[0][counter]==0)
+                if(tmp_ipAdd.state==1)
                 {
-                    cout<<currentDate()<<" "<<*it<<" connection resume"<<endl;
-                    if(Write_state(0,*it))
-                        connections[1][counter]=connections[0][counter];
-                }
-                else
-                {
-                    cout<<currentDate()<<" "<<*it<<" no connection"<<endl;
-                    if(Write_state(1,*it))
-                        connections[1][counter]=connections[0][counter];
+                    Write_state(0,tmp_ipAdd.address);
+                    cout<<currentDate()<<" "<<tmp_ipAdd.name<<" "<<tmp_ipAdd.address<<" - connectiol resume"<<endl;
                 }
             }
-
-            counter++;
         }
-        sleep(10);
+
+
+        ip_list.clear();
+        sleep(30);
     }
 
     return 0;

@@ -1,21 +1,24 @@
 # depslib dependency file v1.0
-1553508610 source:/home/pi/Desktop/WorkPath/Ping_TI/src/main.cpp
+1553519151 source:/home/pi/Desktop/WorkPath/Ping_TI/src/main.cpp
 	<iostream>
 	<list>
 	"DB_Menegement.h"
 	"ping.h"
 	"functions.h"
 	<unistd.h>
+	"IP_addreses.h"
 
-1553508266 /home/pi/Desktop/WorkPath/Ping_TI/src/include/DB_Menegement.h
+1553516543 /home/pi/Desktop/WorkPath/Ping_TI/src/include/DB_Menegement.h
 	<list>
 	<iostream>
+	"IP_addreses.h"
 
-1553508574 source:/home/pi/Desktop/WorkPath/Ping_TI/src/DB_Menegement.cpp
+1553519443 source:/home/pi/Desktop/WorkPath/Ping_TI/src/DB_Menegement.cpp
 	"DB_Menegement.h"
 	<iostream>
 	<mysql/mysql.h>
 	<list>
+	"IP_addreses.h"
 
 1553501686 source:/home/pi/Desktop/WorkPath/Ping_TI/src/ping.cpp
 	"ping.h"
@@ -47,5 +50,12 @@
 	<ctime>
 
 1553502424 /home/pi/Desktop/WorkPath/Ping_TI/src/include/functions.h
+	<iostream>
+
+1553516358 source:/home/pi/Desktop/WorkPath/Ping_TI/src/IP_addreses.cpp
+	"IP_addreses.h"
+	<iostream>
+
+1553518695 /home/pi/Desktop/WorkPath/Ping_TI/src/include/IP_addreses.h
 	<iostream>
 

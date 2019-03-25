@@ -2,28 +2,27 @@
 #include <iostream>
 #include <mysql/mysql.h>
 #include <list>
+#include "IP_addreses.h"
 
 
 using namespace std;
 
-list <string> Get_IPs()
+list <IP_addreses> Get_IPs()
 {
-    list <string>  lst;
-    // list <string>::iterator it;
+    list <IP_addreses>  lst;
+    IP_addreses tmp_ipAddr;
 
     MYSQL mysql;
     mysql_init(&mysql);
     MYSQL_RES *id_query;
     MYSQL_ROW data_row;
 
-    if(mysql_real_connect(&mysql, "localhost", "TI", "rciwiswd04", "TABLICA", 0, NULL, 0))
-        cout<<"Data Base Connected, getting IP list"<<endl;
-    else
+    if(!(mysql_real_connect(&mysql, "localhost", "TI", "rciwiswd04", "TABLICA", 0, NULL, 0)))
         cout<<"Getting IP list Error"<<endl;
 
     mysql_select_db(&mysql, "TABLICA");
 
-    string sendBuff="SELECT RSB_IP FROM RSB";
+    string sendBuff="SELECT RSB, RSB_IP, LINK FROM RSB";
 
     if(mysql_query(&mysql, sendBuff.c_str()))
         cout<<"IP list Read Error"<<endl;
@@ -31,10 +30,12 @@ list <string> Get_IPs()
 
     id_query=mysql_store_result(&mysql);
     while(data_row=mysql_fetch_row(id_query))
-        lst.push_back(data_row[0]);
-
-    //for (it=lst.begin(); it!=lst.end(); it++)
-    // cout<<*it<<endl;
+    {
+        tmp_ipAddr.name= data_row[0];
+        tmp_ipAddr.address = data_row[1];
+        tmp_ipAddr.state = atoi(data_row[2]);
+        lst.push_back(tmp_ipAddr);
+        }
 
 
     mysql_free_result(id_query);
@@ -52,7 +53,7 @@ bool Write_state(int state, std::string address)
     MYSQL_ROW data_row;
 
     if(mysql_real_connect(&mysql, "localhost", "TI", "rciwiswd04", "TABLICA", 0, NULL, 0))
-        cout<<"Data Base Connected, writting status"<<endl;
+        cout<<"Write connection status"<<endl;
     else
     {
         cout<<"Writte status error"<<endl;

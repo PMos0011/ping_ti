@@ -3,8 +3,10 @@
 
 #include <list>
 #include <iostream>
+#include "IP_addreses.h"
 
-std::list <std::string> Get_IPs();
+std::list <IP_addreses> Get_IPs();
+
 bool Write_state(int state, std::string address);
 
 
