@@ -10,37 +10,45 @@ using namespace std;
 
 int main()
 {
-cout<<currentDate()<<" Application start"<<endl;
+    cout<<currentDate()<<" Application start"<<endl;
     while (true)
     {
         list <IP_addreses> ip_list;
         list <IP_addreses>::iterator it;
 
-        ip_list=Get_IPs();
-
-        for (it=ip_list.begin(); it!=ip_list.end(); it++)
+        try
         {
-            IP_addreses tmp_ipAdd = *it;
-            if(ping(tmp_ipAdd.address)<=0)
+            ip_list=Get_IPs();
+
+            for (it=ip_list.begin(); it!=ip_list.end(); it++)
             {
-                if(tmp_ipAdd.state==0)
+                IP_addreses tmp_ipAdd = *it;
+                if(ping(tmp_ipAdd.address)<=0)
                 {
-                    Write_state(1,tmp_ipAdd.address);
-                    cout<<currentDate()<<" "<<tmp_ipAdd.name<<" "<<tmp_ipAdd.address<<" - connectiol lost"<<endl;
+                    if(tmp_ipAdd.state==0)
+                    {
+                        Write_state(1,tmp_ipAdd.address);
+                        cout<<currentDate()<<" "<<tmp_ipAdd.name<<" "<<tmp_ipAdd.address<<" - connectiol lost"<<endl;
+                    }
+                }
+                else
+                {
+                    if(tmp_ipAdd.state==1)
+                    {
+                        Write_state(0,tmp_ipAdd.address);
+                        cout<<currentDate()<<" "<<tmp_ipAdd.name<<" "<<tmp_ipAdd.address<<" - connectiol resume"<<endl;
+                    }
                 }
             }
-            else
-            {
-                if(tmp_ipAdd.state==1)
-                {
-                    Write_state(0,tmp_ipAdd.address);
-                    cout<<currentDate()<<" "<<tmp_ipAdd.name<<" "<<tmp_ipAdd.address<<" - connectiol resume"<<endl;
-                }
-            }
+
+            ip_list.clear();
         }
 
+        catch(string obj)
+        {
+            cout<<currentDate()<<" - loop error"<<endl;
+        }
 
-        ip_list.clear();
         sleep(30);
     }
 
