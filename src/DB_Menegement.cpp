@@ -7,9 +7,8 @@
 
 using namespace std;
 
-list <IP_addreses> Get_IPs()
+bool Get_IPs(list <IP_addreses> &lst)
 {
-    list <IP_addreses>  lst;
     IP_addreses tmp_ipAddr;
 
     MYSQL mysql;
@@ -18,14 +17,20 @@ list <IP_addreses> Get_IPs()
     MYSQL_ROW data_row;
 
     if(!(mysql_real_connect(&mysql, "localhost", "TI", "rciwiswd04", "TABLICA", 0, NULL, 0)))
+    {
         cout<<"Getting IP list Error"<<endl;
+        return false;
+        }
 
     mysql_select_db(&mysql, "TABLICA");
 
     string sendBuff="SELECT RSB, RSB_IP, LINK FROM RSB";
 
     if(mysql_query(&mysql, sendBuff.c_str()))
+    {
         cout<<"IP list Read Error"<<endl;
+        return false;
+        }
 
 
     id_query=mysql_store_result(&mysql);
@@ -41,7 +46,7 @@ list <IP_addreses> Get_IPs()
     mysql_free_result(id_query);
     mysql_close(&mysql);
 
-    return lst;
+    return true;
 
 }
 

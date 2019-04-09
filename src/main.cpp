@@ -16,10 +16,9 @@ int main()
         list <IP_addreses> ip_list;
         list <IP_addreses>::iterator it;
 
-        try
-        {
-            ip_list=Get_IPs();
 
+        if(Get_IPs(ip_list))
+        {
             for (it=ip_list.begin(); it!=ip_list.end(); it++)
             {
                 IP_addreses tmp_ipAdd = *it;
@@ -42,12 +41,10 @@ int main()
             }
 
             ip_list.clear();
-        }
+            }
+            else
+            cout<<"List error"<<endl;
 
-        catch(string obj)
-        {
-            cout<<currentDate()<<" - loop error"<<endl;
-        }
 
         sleep(30);
     }
