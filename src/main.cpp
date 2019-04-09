@@ -16,7 +16,6 @@ int main()
         list <IP_addreses> ip_list;
         list <IP_addreses>::iterator it;
 
-
         if(Get_IPs(ip_list))
         {
             for (it=ip_list.begin(); it!=ip_list.end(); it++)
@@ -44,10 +43,8 @@ int main()
             }
             else
             cout<<"List error"<<endl;
-
-
+            
         sleep(30);
     }
-
     return 0;
 }
